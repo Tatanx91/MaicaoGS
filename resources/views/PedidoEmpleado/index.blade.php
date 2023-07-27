@@ -13,10 +13,10 @@
 </div>
 
 <div class="container" style="z-index: 1050; position: fixed; margin-right:unset; display:none" id="myModal">
-  <!-- Modal usando el atributo data-show="true" -->>
+  <!-- Modal usando el atributo data-show="true" -->
   <div class="" role="dialog" data-show="true">
     <div class="modal-dialog">
-      <!-- Modal content-->>
+      <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -28,6 +28,29 @@
     </div>
   </div>
 </div>
+
+
+   <!-- Modal -->
+<div class="modal fade" id="mensajeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 {{-- <div id="mensaje"></div> --}}
 <div id="mensaje_error" style="width: 100%;"></div>
@@ -60,25 +83,33 @@
 @endif
 
 {!! Form::close() !!}
-{!! Html::script('js/PedidoEmpleado/PedidoEmpleados2.js') !!}
+{!! Html::script('js/PedidoEmpleado/PedidoEmpleados.js') !!}
 
 <div id="selectButton" width="100%" style="text-align: center;">
     <br/>
-    <button
-        style="position: fixed;
+    <div style="position: fixed;
             top: 200px;
-            right: 0;"
-        id="BtnGuardar"
-        class="btn btn-dark"
-        onclick="GuardarPedidoEmpleado({{ $IdHijo }})">Guardar</button>
+            right: 0;">
+            <div>
+                <button
+                    style="width: 100px;
+                        height: 45px;"
+                    id="BtnGuardar"
+                    class="btn btn-dark btnSelec"
+                    onclick="GuardarPedidoEmpleado({{ $IdHijo }})">
+                    Guardar
+                </button>
+            </div>
+            <div id="SeleccionResumen"> 
+            </div>            
+    </div>
+        
 </div>
 
 
 <script type="text/javascript">
  
  $(document).ready(function() {
- 
- console.log(document.getElementById("hijoEmpleado").length);
 
     var CantHijos = document.getElementById("hijoEmpleado").length;
     //document.getElementById("myModal").style.display = "none";
@@ -96,16 +127,21 @@
     
 function GuardarPedidoEmpleado($IdHijo) 
  {
-     var convenio = {!! json_encode($convenio) !!};
-     var NombreHijo = {!! json_encode($NombreHijo) !!};
-     if($IdHijo == 0){
-         alert("Debe seleccionar una opcion");
-         return false;
-     }
-     if(confirm("Estás seguro del juguete seleccionado para " + NombreHijo + "?" )){
-      document.getElementById('BtnGuardar').style.display = 'none';
-      GuardaPedidoEmpleado(convenio, $IdHijo, 0);
-     }
+    var convenio = {!! json_encode($convenio) !!};
+    var NombreHijo = {!! json_encode($NombreHijo) !!};
+    if($IdHijo == 0){
+        alert("Debe seleccionar una opcion");
+        return false;
+    }
+    const miModal = new bootstrap.Modal(document.getElementById('mensajeModal'));
+
+    // Mostrar la modal
+    
+    if(confirm("Estás seguro del juguete seleccionado para " + NombreHijo + "?" )){
+    document.getElementById('BtnGuardar').style.display = 'none';
+    GuardaPedidoEmpleado(convenio, $IdHijo, 0);
+    }
+    
      
  }
  

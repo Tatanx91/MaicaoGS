@@ -32,6 +32,27 @@ function GuardaPedidoEmpleado(params, IdHijo, Empresa)
 	}	
 
 }
+function seleccion(rutaimg, nombrejuguete){
+
+	const btn = document.getElementById("BtnGuardar");
+	btn.classList.toggle("animateColor");
+
+	var resumen = document.getElementById("SeleccionResumen");
+	var nuevoDiv = document.createElement("div");
+	nuevoDiv.setAttribute("class", "card text-center");
+
+	var img = document.createElement("img");
+	img.setAttribute("src", rutaimg);
+
+	var nombre = document.createElement("p");
+	nombre.textContent = nombrejuguete;
+
+	nuevoDiv.appendChild(img);
+	nuevoDiv.appendChild(nombre);
+	resumen.replaceChildren(nuevoDiv);
+	//resumen.replaceChild(nuevoDiv, resumen);
+	
+}
 
 function GuardarPedidoEmp(params, empresa){
 	var url = $("#APP_URL").val() + "/pedidoEmpleado/postStorePedidoEmpleado";

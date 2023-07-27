@@ -6,7 +6,7 @@
           <img id="ImagenJ" src="{{url("/") .'/'. $item->Ruta.$item->Imagen}}" style="width: 200px;height: 200px;cursor: pointer;" class="img-thumbnail" onclick="CargaTodasLasImagenesPE('{{ $item->IdJuguete }}');">  
         </div>
         <div class="card-footer text-muted">
-            <input style="width: 25px; height: 25px" type="radio" name="JugueteSelect" id=chk_{{$item->IdJugueteConvenio}}>
+            <input style="width: 25px; height: 25px" type="radio" name="JugueteSelect" onclick="seleccion('{{url("/") .'/'. $item->Ruta.$item->Imagen}}','{{$item->Nombre}}')" id=chk_{{$item->IdJugueteConvenio}}>
 
             <label style='width: 100%'>Obsequio: {{$item->Nombre}}</label>
             <label style='width: 100%'>Descripcion: {{$item->Descripcion}}</label>

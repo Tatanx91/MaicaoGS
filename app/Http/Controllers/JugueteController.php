@@ -48,11 +48,11 @@ class JugueteController extends Controller
         $search = $request->get("search");
         $order = $request->get("order");
         $sortColumnIndex = $order[0]['column'];
-        $sortColumnDir = $order[0]['dir'];
         $length = $request->get('length');
         $start = $request->get('start');
         $columna = $request->get('columns');
-        $orderBy = $columna[$sortColumnIndex]['data'];
+        $orderBy = $columna[$sortColumnIndex]['data'] == 'ID' ? 'Juguete.Created_At' :  $columna[$sortColumnIndex]['data'];
+        $sortColumnDir = $columna[$sortColumnIndex]['data'] == 'ID' ? 'desc' :  $order[0]['dir'];
         
         $juguete = Juguete_model::join('Genero','Genero.ID','=','Juguete.IdGenero')
          ->select(
@@ -66,6 +66,7 @@ class JugueteController extends Controller
                 'Juguete.descripcion',
                 'Juguete.cantidad',
                 'Juguete.estado',
+                'Juguete.Created_At',
                 'Genero.ID as IdGenero',
                 'Genero.Nombre as NombreGenero');
                                     //->orderBy("IdJuguete", "desc");//

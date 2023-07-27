@@ -109,6 +109,7 @@ class ReportesController extends Controller
                     'HijoEmpleado.Nombre as NombreHijo',
                     'HijoEmpleado.Apellido as ApellidoHijo',
                     'HijoEmpleado.FechaNacimiento as FechaNacimiento',
+                    DB::raw('ROUND(TIMESTAMPDIFF(MONTH, `HijoEmpleado`.`FechaNacimiento`, CURDATE()) / 12, 1) AS Edad'),
                     'Empleado.Direccion',
                     'Empleado.Ciudad',
                     'Empleado.NumeroDocumento',
@@ -117,7 +118,7 @@ class ReportesController extends Controller
                     // 'Convenio.FechaFin',
                     // 'PedidoConvenio.Created_At as FechaSeleccion'
                 )
-             ->where('Convenio.IdEmpresa','=',295)
+             ->where('Convenio.IdEmpresa','=',$empresa)
              ->whereNull('PedidoConvenio.ID')
              ->distinct();
 
@@ -125,7 +126,7 @@ class ReportesController extends Controller
         
         
          if($FechaIni != null && $FechaIni != '')
-                $table  = $table->where('Convenio.FechaInicio',$FechaIni);
+                $table  = $table->where('Convenio.FechaInicio','<=',$FechaIni);                
             
          if($FechaFin != null && $FechaFin != '')
                 $table  = $table->where('Convenio.FechaFin','>=',$FechaFin);
@@ -282,6 +283,7 @@ class ReportesController extends Controller
                     'HijoEmpleado.Nombre as NombreHijo',
                     'HijoEmpleado.Apellido as ApellidoHijo',
                     'HijoEmpleado.FechaNacimiento as FechaNacimiento',
+                    DB::raw('ROUND(TIMESTAMPDIFF(MONTH, `HijoEmpleado`.`FechaNacimiento`, CURDATE()) / 12, 1) AS Edad'),
                     'Empleado.Direccion',
                     'Empleado.Telefono',
                     'Empleado.NumeroDocumento')

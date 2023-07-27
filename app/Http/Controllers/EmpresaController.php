@@ -85,11 +85,11 @@ class EmpresaController extends Controller
         $search = $request->get("search");
         $order = $request->get("order");
         $sortColumnIndex = $order[0]['column'];
-        $sortColumnDir = $order[0]['dir'];
         $length = $request->get('length');
         $start = $request->get('start');
         $columna = $request->get('columns');
-        $orderBy = $columna[$sortColumnIndex]['data'] == 'ID' ? 'Empresa.ID' :  $columna[$sortColumnIndex]['data'];
+        $orderBy = $columna[$sortColumnIndex]['data'] == 'ID' ? 'Empresa.Created_At' :  $columna[$sortColumnIndex]['data'];
+        $sortColumnDir = $columna[$sortColumnIndex]['data'] == 'ID' ? 'desc' :  $order[0]['dir'];
 
         $tipoUsuario = null;
         // $tipoUsuario = $_SESSION['IdTipoUsuario'];
@@ -113,7 +113,8 @@ class EmpresaController extends Controller
                         'Empresa.Logo',
                         'Empresa.Estado',
                         'Usuario.Correo',
-                        'Empresa.CorreoComercial');
+                        'Empresa.CorreoComercial',
+                        'Empresa.Created_At');
                         //->orderBy("IdEmpresa", "desc");)
 
         $empresas = $empresas->orderBy($orderBy, $sortColumnDir);  

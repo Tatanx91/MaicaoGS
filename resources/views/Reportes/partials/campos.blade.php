@@ -63,6 +63,7 @@
                         <th>Nombre Hijo</th>
                         <th>Apellido Hijo</th>
                         <th>Fecha Nacimiento</th>
+                        <th>Edad</th>
                         <th>Dirección Empleado</th>
                         <th>Telefono/Celular</th>
                         <th>Ciudad</th>
@@ -202,6 +203,7 @@ function cargarTablaEmpresa(){
                 {"data": "NombreHijo", "className": "text-center"},
                 {"data": "ApellidoHijo", "className": "text-center"},
                 {"data": "FechaNacimiento", "className": "text-center"},
+                {"data": "Edad", "className": "text-center"},
                 {"data": "Direccion", "className": "text-center"},
                 {"data": "Telefono", "className": "text-center"},
                 {"data": "Ciudad", "className": "text-center"},
