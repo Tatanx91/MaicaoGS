@@ -83,13 +83,15 @@ function guardarEmpleado(){
 		params += "&_token=" + token+"&IdEmpresa="+idEmpresa+"&FechaNacimiento="+$("#FechaNacimiento").val();
 		$.post(url, params).done(function(data){
 			cargarTablaempleado()
-			$('.close').click();
-			if(data.error == 'error'){
-				$("#mensaje_error").html('<div class="alert alert-danger alert-dismissible div-msg" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><center><b>' + data.mensaje + '</b></center></div>')
+			if(data.error.includes('Duplicate')){
+				let msgDuplicado = data.error.includes('Duplicate') ? "Error, el usuario ya se encuentra en la base de datos" : data.mensaje ;
+				$("#mensaje_error").html('<div class="alert alert-danger alert-dismissible div-msg" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><center><b>' + msgDuplicado + '</b></center></div>')
                return false;
 			}
-
-			$("#mensaje").html('<div class="alert alert-success alert-dismissible div-msg" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><center><b>'+data.mensaje+'</b></center></div>')		
+			else{
+				$('.close').click();
+				$("#mensaje").html('<div class="alert alert-success alert-dismissible div-msg" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><center><b>'+data.mensaje+'</b></center></div>')		
+			}
 				
 		}).fail(function(jqXHR){
 			$("#mensaje_error").html('<div class="alert alert-danger alert-dismissible div-msg" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><center><b>Error al guardar</b></center></div>')

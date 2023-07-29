@@ -530,6 +530,9 @@ class EmpleadoController extends Controller
                 if($request->input('Correo') != ""){
                     $datosusu['Correo'] = $request->input('Correo');
                 }
+                if($request->input('NumeroDocumento') != ""){
+                    $datosusu['Login'] = $request->input('NumeroDocumento');
+                }
                 $datosusu->save();
 	        }else{
 
@@ -571,7 +574,7 @@ class EmpleadoController extends Controller
             }
             $datos->save();
     
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response([
                     "mensaje" => "Error al guardar, por favor intenta de nuevo o comunícate con el administrador.",
                     "error" => $e->getMessage()
@@ -631,7 +634,7 @@ class EmpleadoController extends Controller
             $datos->fill($data);
             $datos->save();
     
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response([
                     "mensaje" => "Error al guardar, por favor intenta de nuevo o comunícate con el administrador.",
                     "error" => $e->getMessage()
@@ -644,7 +647,6 @@ class EmpleadoController extends Controller
                 //"request" => $request->all(),
                 "datos" => $datos
             ]);
-        return response()->json($retorno);
     }
 
     public function eliminarEmpleado(Request $request)
@@ -655,17 +657,24 @@ class EmpleadoController extends Controller
             $IdEmpleado = $request->input('IdEmpleado');
             $IdEmpresa = $request->input('IdEmpresa');
             
-            var_dump($IdEmpleado);
-            
             //De devuelve el stoc si el empleado ya ha seleccionado algun juguete para sus hijos en el convenio vigente
-            //$return = DB::select("call DevolverStockEmpleado (".$IdEmpleado.")");
-            DB::table('Empleado')->where('Empleado.ID', '=', $IdEmpleado)->delete();
+            $return = DB::select("call DevolverStockEmpleado (".$IdEmpleado.")");
+
+            $Empleado = EmpleadoModel::select('IdUsuario')
+                                ->where('Empleado.ID', '=', $IdEmpleado)
+                                ->first();
+
+            $IdUsuario = $Empleado->IdUsuario;
+
+            $Empleado->delete();
+
+            DB::table('Usuario')->where('Usuario.ID', '=', $IdUsuario)->Delete();
 
             return view('Empleado.index')->with(['IdEmpresa'=>$IdEmpresa]);
             
         }
 
-        catch (Exception $e){
+        catch (\Exception $e){
 
             return response([
                     "mensaje" => "Error al eliminar, por favor intenta de nuevo o comunícate con el administrador.",
@@ -863,7 +872,7 @@ class EmpleadoController extends Controller
                    'success' => 'success'
                  ]);
 
-            }catch (Exception $e) {
+            }catch (\Exception $e) {
                 return response()->json([
                     'mensaje'=>"Error  al guardar. Por favor intenta de nuevo.",         
                     'error' => $e->getMessage()
@@ -940,7 +949,7 @@ class EmpleadoController extends Controller
 		try{
 			\DateTime::createFromFormat("Y-m-d", $date);
 			return true;
-		}catch(Exception $e) {
+		}catch(\Exception $e) {
 			return false;
 		}
 	    // $d = \DateTime::createFromFormat($format, $date);
@@ -982,7 +991,7 @@ class EmpleadoController extends Controller
                 $mensaje->to($data['CorreoComercial'], $data['NombreUsuario'])->subject('Novedad Empleado '.$data['NombreUsuario'] );
             });
     
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response([
                     "error" => $e->getMessage()
                 ]);
@@ -1058,7 +1067,7 @@ class EmpleadoController extends Controller
             }
             
     
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response([
                     "error" => $e->getMessage()
                 ]);
