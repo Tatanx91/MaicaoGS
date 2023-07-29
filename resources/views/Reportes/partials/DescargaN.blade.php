@@ -45,10 +45,11 @@
             <th>Telefono/Celular</th>
             <th>Dirección Empleado</th>
             <th>Ciudad</th>
-            @if( $tipoReporte == 1)
+            @if( $tipoReporte == 2)
                 <th>Nombre Hijo</th>
                 <th>Apellido Hijo</th>
                 <th>Fecha Nacimiento</th>
+                <th>Edad</th>
                 {{-- <th>Nombre Juguete</th> --}}
                 {{-- <th>Fecha inicial</th> --}}
                 {{-- <th>Fecha Fin</th> --}}
@@ -73,10 +74,11 @@
                          <td align="center">{{ $val->Telefono}}</td>
                          <td align="center">{{ $val->Direccion}}</td>
                          <td align="center">{{ $val->Ciudad}}</td>
-                         @if( $tipoReporte == 1)
+                         @if( $tipoReporte == 2)
                              <td align ="center">{{ $val->NombreHijo}}</td>
                              <td align ="center">{{ $val->ApellidoHijo}}</td>
                              <td align ="center">{{ $val->FechaNacimiento}}</td>
+                             <td align ="center">{{ $val->Edad}}</td>
                              {{-- <td align="center">{{ $val->NombreJuguete}}</td> --}}
                              {{-- <td align="center">{{ $val->FechaInicio}}</td> --}}
                              {{-- <td align="center">{{ $val->FechaFin}}</td> --}}

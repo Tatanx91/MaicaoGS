@@ -89,15 +89,15 @@
     <br/>
     <div style="position: fixed;
             top: 200px;
-            right: 0;">
+            right: 0;
+            height: 500px;
+            width: 200PX">
             <div>
                 <button
-                    style="width: 100px;
-                        height: 45px;"
                     id="BtnGuardar"
                     class="btn btn-dark btnSelec"
                     onclick="GuardarPedidoEmpleado({{ $IdHijo }})">
-                    Guardar
+                    Guarda tu selección
                 </button>
             </div>
             <div id="SeleccionResumen"> 

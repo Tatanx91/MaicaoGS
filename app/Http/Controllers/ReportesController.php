@@ -225,6 +225,7 @@ class ReportesController extends Controller
                     'HijoEmpleado.Nombre as NombreHijo',
                     'HijoEmpleado.Apellido as ApellidoHijo',
                     'HijoEmpleado.FechaNacimiento as FechaNacimiento',
+                    DB::raw('ROUND(TIMESTAMPDIFF(MONTH, `HijoEmpleado`.`FechaNacimiento`, CURDATE()) / 12, 1) AS Edad'),
                     'Empleado.Direccion',
                     'Empleado.Telefono',
                     'Empleado.NumeroDocumento',
