@@ -324,9 +324,9 @@ class EmpresaController extends Controller
                                 ->where('Empleado.ID', '=', $IdEmpleado)
                                 ->first();
 
-                    $IdUsuario = $Empleado->IdUsuario;
+                    $IdUsuarioEmp = $Empleado->IdUsuario;
 
-                    DB::table('Usuario')->where('Usuario.ID', '=', $IdUsuario)->Delete();
+                    DB::table('Usuario')->where('Usuario.ID', '=', $IdUsuarioEmp)->Delete();
 
                 }
             }
@@ -349,7 +349,15 @@ class EmpresaController extends Controller
                 }
             }
 
-            Empresa_Model::destroy($IdEmpresa);
+            $Empresa = EmpleadoModel::select('IdUsuario')
+                                ->where('Empresa.ID', '=', $IdEmpresa)
+                                ->first();
+
+            Empresa_Model::destroy($IdEmpresa);            
+
+                    $IdUsuario = $Empresa->IdUsuario;
+
+                    DB::table('Usuario')->where('Usuario.ID', '=', $IdUsuario)->Delete();
             
             return response()->json($IdEmpresa);
             
