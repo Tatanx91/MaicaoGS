@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Jugueteria\Empresa;
 use App\Http\Requests;
 use Jugueteria\model\Empresa_Model;
+use Jugueteria\model\EmpleadoModel;
 use Jugueteria\model\TipoDocumento_Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -202,7 +203,7 @@ class EmpresaController extends Controller
                 });
                 
             }
-            catch (Exception $e){
+            catch (\Exception $e){
                 $retorno = [
                     "mensaje" => "Error al enviar correo, por favor comunícate con el administrador.",
                     "error" => $e->getMessage()
@@ -211,7 +212,7 @@ class EmpresaController extends Controller
                 return response()->json($retorno);
             }
     
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // return response([
             //         "mensaje" => "Error al guardar, por favor intenta de nuevo o comunícate con el administrador.",
             //         "error" => $e->getMessage()
@@ -316,9 +317,16 @@ class EmpresaController extends Controller
                 {
                     $IdEmpleado = $key->ID;
 
-                    //$return = DB::select("call DevolverStockEmpleado (".$IdEmpleado.")");
+                    $return = DB::select("call DevolverStockEmpleado (".$IdEmpleado.")");
                     //DB::table('Empleado')->where('Empleado.ID', '=', $IdEmpleado)->delete();
                     //EmpleadoModel::destroy($IdEmpleado);
+                    $Empleado = EmpleadoModel::select('IdUsuario')
+                                ->where('Empleado.ID', '=', $IdEmpleado)
+                                ->first();
+
+                    $IdUsuario = $Empleado->IdUsuario;
+
+                    DB::table('Usuario')->where('Usuario.ID', '=', $IdUsuario)->Delete();
 
                 }
             }
@@ -347,7 +355,7 @@ class EmpresaController extends Controller
             
         }
 
-        catch (Exception $e){
+        catch (\Exception $e){
 
             return response([
                     "mensaje" => "Error al eliminar, por favor intenta de nuevo o comunícate con el administrador.",
