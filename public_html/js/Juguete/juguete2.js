@@ -24,7 +24,8 @@ function cargarTablaJuguete(){
 			{"data": "NombreGenero", "className": "text-center"},
 			{"data": null, "defaultContent": "", "className": "text-center ","orderable": false },
 			{"data": null, "defaultContent": "", "className": "text-center ","orderable": false },
-			{"data": null, "defaultContent": "", "className": "text-center ","orderable": false }
+			{"data": null, "defaultContent": "", "className": "text-center ","orderable": false },
+			{"data": "ID", "className": "text-center"}
 
 		],
 		"createdRow":function(row, data, index){
@@ -37,8 +38,9 @@ function cargarTablaJuguete(){
 			}
             		$(row).attr('id','tr_'+index);
 					$("td", row).eq(9).html("<span style='cursor: pointer;' class='fa fa-edit fa-2x' data-id='"+data.ID+"' id='EDITAR' title='Editar juguete'></span>");
-					$("td", row).eq(10).html("<span style='cursor: pointer;' id=estado_"+data.ID+" class='fa "+clase_estado+" fa-2x' onclick=activarDessactivarJuguete('"+data.ID+"','"+data.estado+"'); title='"+estado+" juguete'></span>")
-					$("td", row).eq(11).html("<a href='"+$("#APP_URL").val() +"/Galeria/getGaleriaImg?Id="+data.ID+"'><span style='cursor: pointer;' class='fa fa-camera fa-2x'title='Galeria de Imagenes'  ></span><a>")
+					$("td", row).eq(10).html("<span style='cursor: pointer;' id=estado_"+data.ID+" class='fa "+clase_estado+" fa-2x' onclick=activarDessactivarJuguete('"+data.ID+"','"+data.estado+"'); title='"+estado+" juguete'></span>");
+					$("td", row).eq(11).html("<a href='"+$("#APP_URL").val() +"/Galeria/getGaleriaImg?Id="+data.ID+"'><span style='cursor: pointer;' class='fa fa-camera fa-2x'title='Galeria de Imagenes'  ></span><a>");
+					$("td", row).eq(12).html("<span style='cursor: pointer;' class='fa fa-close fa-2x' onclick=eliminarJuguete('"+data.ID+"',event); title='Eliminar'  ></span><a>");
 					// $("td", row).eq(10).html("<a href='"+$("#APP_URL").val() +"/Juguete/galeria"+"'><span style='cursor: pointer;' class='fa fa-camera fa-2x'title='Galeria de Imagenes'  ></span><a>")
 				//<button type='button' onclick=\"habilitar_deshabilitar_juguete('"+data.IdJuguete+"', 'deshabilitar')\" class='btn btn-primary' ></button>
 				//<button type='button' data-id='"+data.IdJuguete+"' id='EDITAR' class='btn btn-primary' data-toggle='modal' data-placement='bottom' data-target='#popup' title='Editar registro'><span class='fa fa-edit'></span></button>
@@ -89,4 +91,35 @@ function activarDessactivarJuguete(id,estado){
 	    
 	});
 
+}
+
+function eliminarJuguete(id,event){
+	event.stopPropagation();
+	
+	if(confirm('¿Esta seguro de eliminar el juguete?')){
+		document.getElementById("loader").style.display="block";
+		$.post($("#APP_URL").val()+"/Juguete/eliminarJuguete",
+			{ 
+				"_token" :  $("#_MTOKEN").val(),
+				"_IdJuguete" : id
+			},
+			function(data){
+				console.log("Entro");
+				location.reload();
+			//console.log(data)
+			//$('#popup').empty().append($(data));
+			//$('#popup').modal('show');
+			}
+		)
+		.done(function(){
+			document.getElementById("loader").style.display="none";
+		})
+		.fail(function(data){
+			document.getElementById("loader").style.display="none";
+			/*
+			$("#mensaje_error").html('<div class="alert alert-danger alert-dismissible div-msg" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><center><b>Error al guardar Novedad, contace al administrador. '+data+'</b></center></div>')
+			*/
+		});
+	}
+	
 }

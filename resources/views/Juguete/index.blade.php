@@ -39,12 +39,13 @@
                         <th width="7%"></th>
                         <th width="7%"></th>
                         <th width="7%"></th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
             </table>
         </div>
 
-        {!! Html::script('js/Juguete/juguete.js') !!}
+        {!! Html::script('js/Juguete/juguete2.js') !!}
         <script type="text/javascript">
             var token = $("#_MTOKEN").val();
             $(document).ready(function(){

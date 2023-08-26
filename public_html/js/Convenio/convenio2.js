@@ -10,27 +10,31 @@ function ValidaConvenio(params)
 	var CountChk = 0;
 	// var img = params;
 
+	var IdConvenio = $('#IdConvenio').val();
 	var img= tabla;
 
+	console.log(IdConvenio);
+	if(IdConvenio <= 0){
+		$FechaIni = $("#DtpFechaIni").val();
+		$FechaFin = $("#DtpFechaFin").val();
 
-	$FechaIni = $("#DtpFechaIni").val();
-	$FechaFin = $("#DtpFechaFin").val();
+		if($FechaIni == "")
+		{
+			document.getElementById("DtpFechaIni").style.borderColor = "red";
+			CumpleValidaciones = false;
+		}
+		else
+			document.getElementById("DtpFechaIni").style.borderColor = "";
 
-	if($FechaIni == "")
-	{
-		document.getElementById("DtpFechaIni").style.borderColor = "red";
-        CumpleValidaciones = false;
-    }
-    else
-    	document.getElementById("DtpFechaIni").style.borderColor = "";
-
-	if($FechaFin == "")
-	{
-		document.getElementById("DtpFechaFin").style.borderColor = "red";
-        CumpleValidaciones = false;
-    }		
-    else
-    	document.getElementById("DtpFechaFin").style.borderColor = "";
+		if($FechaFin == "")
+		{
+			document.getElementById("DtpFechaFin").style.borderColor = "red";
+			CumpleValidaciones = false;
+		}		
+		else
+			document.getElementById("DtpFechaFin").style.borderColor = "";
+	}
+	
 
     if(CumpleValidaciones)
     {	
@@ -102,7 +106,15 @@ function GuardarConvenio(params){
 	var url = $("#APP_URL").val() + "/convenio/postStore";
 	var IdEmpresa = $('#IdEmpresa').val();
 
-	$.post(url, {_img:params, _token:token, _IdEmpresa:$("#IdEmpresa").val(), _DtpFechaIni:$("#DtpFechaIni").val(), _DtpFechaFin:$("#DtpFechaFin").val()}).done(function(data){
+	$.post(url, {
+		_img:params, 
+		_token:token,
+		_IdEmpresa:$("#IdEmpresa").val(),
+		_DtpFechaIni:$("#DtpFechaIni").val(),
+		_DtpFechaFin:$("#DtpFechaFin").val(),
+		_IdConvenio:$("#IdConvenio").val(),
+		}
+	).done(function(data){
 		if (data.Result == 1) 
 		{
 			$("#mensaje").html('<div class="alert alert-success alert-dismissible div-msg" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><center><b>'+data.mensaje+'</b></center></div>')		
@@ -490,6 +502,7 @@ function FiltrarJuguetes(){
 
 	var IdEmpresa = $('#IdEmpresa').val();
 	var Texto = $('#TextoBuscar').val()
+	var IdConvenio = $('#IdConvenio').val();
 
 	if(Texto == "")
 		return false;
@@ -498,7 +511,7 @@ function FiltrarJuguetes(){
 		window.location.href=$('#APP_URL').val() + "/Convenios/"+IdEmpresa;	
 	});
 
-	window.location.href=$('#APP_URL').val() + "/Convenio/FiltroJuguetes/"+Texto+"/"+IdEmpresa;
+	window.location.href=$('#APP_URL').val() + "/Convenio/FiltroJuguetes/"+Texto+"/"+IdEmpresa+"/"+IdConvenio;
 
 }
 

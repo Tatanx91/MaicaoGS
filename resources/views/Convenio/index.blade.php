@@ -24,26 +24,29 @@
 <div id="mensaje_error" style="width: 100%;"></div>
 
 {!! Form::hidden('IdEmpresa', $IdEmpresa, array('id' => 'IdEmpresa'))!!}
+{!! Form::hidden('IdConvenio', $IdConvenio, array('id' => 'IdConvenio'))!!}
 {!! Form::open(['id' => 'form-convenio', 'method' => 'POST', 'autocomplete' => 'off','route' => 'postStore']) !!}
-{!! Form::label('FechaInicio', 'Fecha Inicio:') !!}
-<div class="form-group">
-    <div class="input-group date" id="DivFechaIni" data-target-input="nearest">
-        <input type="text" readonly="true" id="DtpFechaIni" class="form-control datetimepicker-input Datepicker" data-target="#DtpFechaIni" placeholder = 'Fecha Inicio Convenio'/>
-        <div class="input-group-append" data-target="#DtpFechaIni" data-toggle="datetimepicker">
-            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+@if( $IdConvenio <= 0)
+    {!! Form::label('FechaInicio', 'Fecha Inicio:') !!}
+    <div class="form-group">
+        <div class="input-group date" id="DivFechaIni" data-target-input="nearest">
+            <input type="text" readonly="true" id="DtpFechaIni" class="form-control datetimepicker-input Datepicker" data-target="#DtpFechaIni" placeholder = 'Fecha Inicio Convenio'/>
+            <div class="input-group-append" data-target="#DtpFechaIni" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
         </div>
     </div>
-</div>
 
-{!! Form::label('FechaFin', 'Fecha Fin:') !!}
-<div class="form-group">
-    <div class="input-group date" id="DivFechaFin" data-target-input="nearest">
-        <input type="text" readonly="true" id="DtpFechaFin" class="form-control datetimepicker-input Datepicker" data-target="#DtpFechaFin" placeholder = 'Fecha Fin Convenio'/>
-        <div class="input-group-append" data-target="#DtpFechaFin" data-toggle="datetimepicker">
-            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    {!! Form::label('FechaFin', 'Fecha Fin:') !!}
+    <div class="form-group">
+        <div class="input-group date" id="DivFechaFin" data-target-input="nearest">
+            <input type="text" readonly="true" id="DtpFechaFin" class="form-control datetimepicker-input Datepicker" data-target="#DtpFechaFin" placeholder = 'Fecha Fin Convenio'/>
+            <div class="input-group-append" data-target="#DtpFechaFin" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
         </div>
     </div>
-</div>
+@endif
 
 <div class="default" style="margin-bottom: 10px !important;width: 100%">
         <div class="page-header">
@@ -116,7 +119,7 @@
 </div>
 
 {!! Form::close() !!}
-{!! Html::script('js/Convenio/convenio.js') !!}
+{!! Html::script('js/Convenio/convenio2.js') !!}
 
 <table width="100%" style="text-align: center;">
   <tr>

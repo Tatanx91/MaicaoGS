@@ -239,4 +239,20 @@ class JugueteController extends Controller
             return $view;
         }       
     }
+
+    public function eliminarJuguete(Request $request)
+    {
+
+        $IdJuguete = $request['_IdJuguete'];
+
+        Juguete_model::destroy($IdJuguete);
+
+        $retorno = [
+            "success" => true,
+            "mensaje" => "Juguete eliminado correctamente"
+        ];
+
+       return response()->json($retorno);
+
+    }
 }

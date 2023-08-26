@@ -98,6 +98,7 @@
     <a href={{url("/").'/convenio/DevolverStockConvenio/'.$IdConvenio}} class="btn btn-primary" style="width: 10%; margin-bottom: .5rem">Act. Stock</a>
   @endif
   <a href={{url("/").'/convenio/IndexListConvenio/'.$IdEmpresa}} class="btn btn-primary" style="width: 10%; margin-bottom: .5rem">Regresar</a>
+  <a href={{url("/").'/Convenios/Add/'.$IdConvenio}} class="btn btn-primary" style="width: 10%; margin-bottom: .5rem">Add</a>
 </div>
 
 <script type="text/javascript">

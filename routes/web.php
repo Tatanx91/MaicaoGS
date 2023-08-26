@@ -71,12 +71,17 @@ Route::post('/Juguete/galeria', array(
     'uses' => 'JugueteController@galeria'
     ));
 
+Route::post('/Juguete/eliminarJuguete', array(
+        'as' => 'EliminarJuguete',
+        'uses' => 'JugueteController@eliminarJuguete'
+        ));
+
 // Route::get('/Convenio/CargarJuguetesConvenio', array(
 //     'as' => 'CargarJuguetesConvenio',
 //     'uses' => 'ConvenioController@CargarJuguetesConvenio'
 //     ));
 
-Route::get('/Convenio/FiltroJuguetes/{Texto}/{IdEmpresa}', array(
+Route::get('/Convenio/FiltroJuguetes/{Texto}/{IdEmpresa}/{IdConvenio}', array(
     'as' => 'FiltroJuguetes',
     'uses' => 'ConvenioController@FiltroJuguetes'
     ));
@@ -340,11 +345,17 @@ Route::get('/empresa/IndexEmpresa/{Id}', array(
     'uses' => 'EmpresaController@IndexEmpresa'
 ));
 
+Route::post('/empresa/PDF',[
+    'as' => 'PDF',
+    'uses' => 'EmpresaController@generatePdf'
+]);
+
 
 Route::get('/empresa/postFormempresa', array(
     'as' => 'postFormempresa',
     'uses' => 'EmpresaController@postFormempresa'
 ));
+
 Route::post('/empresa/postStore',[
     'as' => 'postStore',
     'uses' => 'EmpresaController@postStore'
@@ -429,6 +440,11 @@ Route::post('/convenio/EliminarJugueteConvenio',[
 Route::get('/Convenios/{ID}', array(
     'as' => 'Convenio',
     'uses' => 'ConvenioController@Index'
+));
+
+Route::get('/Convenios/Add/{IdConvenio}', array(
+    'as' => 'ConvenioAdd',
+    'uses' => 'ConvenioController@AgregarJugueteGet'
 ));
 
 Route::get('/convenio/getGaleriaImg', array(

@@ -5,6 +5,7 @@ namespace Jugueteria\Http\Controllers;
 use Illuminate\Http\Request;
 use Jugueteria\Empresa;
 use App\Http\Requests;
+//use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Jugueteria\model\Empresa_Model;
 use Jugueteria\model\EmpleadoModel;
 use Jugueteria\model\TipoDocumento_Model;
@@ -14,6 +15,7 @@ use Jugueteria\model\UsuariosModel;
 use Illuminate\Support\Facades\Session;
 use File;
 use Mail;
+//use PDF;
 
 class EmpresaController extends Controller
 {
@@ -162,10 +164,12 @@ class EmpresaController extends Controller
 
     public function postStore(Request $request)
     {
-        try {
-
+        try {           
+            
             $IdEmpresa = $request->input('ID');
-            $usuario = new UsuariosModel();
+            
+            $empresas = $IdEmpresa == "" ? new Empresa_Model() : Empresa_Model::find($IdEmpresa);
+            $usuario = $IdEmpresa == "" ? new UsuariosModel() : UsuariosModel::find($empresas->IdUsuario);
 
             $nombreUsuario = $request['Nombre'];
             $numeroDocumento = $request['NumeroDocumento'];
@@ -269,6 +273,41 @@ class EmpresaController extends Controller
             return $view;
         }       
     }
+
+    public function generatePdf(Request $request)
+    {
+        session_start();
+        try{
+
+            //$pdf = PDF::loadHtml('<h1>Test</h1>');
+            //return $pdf->download('test.pdf');
+        }
+        catch (\Exception $e) {
+            // return response([
+            //         "mensaje" => "Error al guardar, por favor intenta de nuevo o comunícate con el administrador.",
+            //         "error" => $e->getMessage()
+            //     ]);
+
+            $retorno = [
+                    "mensaje" => "Error al guardar, por favor intenta de nuevo o comunícate con el administrador.",
+                    "error" => $e->getMessage()
+                ];
+
+            return response()->json($retorno);
+        }
+        
+ 
+        /*
+        $pdf = PDF::loadView('D:\BK\Proyectos\Jugueteria\resources\views\Empresa\Formats\cierreConvenio.blade.php');
+        return $pdf->download('prueba.pdf');
+        
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $dompdf->setOptions($options);
+        */
+    }
+
 
     public function cambiaEstado(Request $request)
     {
